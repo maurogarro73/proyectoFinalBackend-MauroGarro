@@ -27,7 +27,7 @@ import swaggerUiExpress from 'swagger-ui-express';
 import { logger } from './utils/logger.utils.js';
 
 const app = express();
-const port = 8080;
+const port = process.env.PORT || 8080;
 
 app.use(addLogger);
 
@@ -36,7 +36,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //Socket.io webSockets
 const httpServer = app.listen(port, () => {
-  logger.http(`🍕 App listening on port ➡️  http://localhost:${port}`);
+  logger.http(`🍕 App listening on port ➡️  ${port}`);
 });
 
 /* Connet to Mongo */
