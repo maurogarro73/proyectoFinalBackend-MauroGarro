@@ -1,0 +1,193 @@
+paths:
+  /api/products:
+    get:
+      summary: Obtiene todos los productos
+      tags:
+        - Products
+      responses:
+        200:
+          description: Los productos fueron devueltos satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Products'
+        500:
+          description: Error del servidor. Usualmente generando la query o falla la conexion a la DB
+
+    post:
+      summary: Agregar un producto
+      tags:
+        - Products
+      description: Crea un nuevo producto.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateProduct'
+      responses:
+        200:
+          description: El producto se creó correctamente.
+        400:
+          description: Se produjo un error en la solicitud.
+
+  /api/products/{uid}:
+    get:
+      summary: Obtiene un producto
+      tags:
+        - Products
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID del producto que se busca
+          schema:
+            $type: String
+      responses:
+        200:
+          description: Producto encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Products'
+    put:
+      summary: Actualizar un product a partir del ID
+      tags:
+        - Products
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID del producto que se busca
+          schema:
+            $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateProduct'
+      responses:
+        200:
+          description: Producto modificado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Success'
+
+    delete:
+      summary: Eliminar un producto a partir del ID
+      tags:
+        - Products
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID del producto que se desea eliminar
+          schema:
+            $type: String
+      responses:
+        200:
+          description: El producto se eliminó correctamente.
+        400:
+          description: Se produjo un error en la solicitud.
+        500:
+          description: No se encontró el producto.
+
+components:
+  schemas:
+    Success:
+      type: object
+      properties:
+        status:
+          type: String
+          description: success or error
+        message:
+          type: String
+          description: aclarando que ocurrio
+      example:
+        status: success
+        message: Product updated
+    Products:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: ID auto generado by mongo
+        title:
+          type: String
+          description: Titulo del producto
+        description:
+          type: String
+          description: Descripción del producto
+        price:
+          type: Number
+          description: Precio del producto
+        thumbnail:
+          type: String
+          description: url de la imágen
+        code:
+          type: String
+          description: codigo único del producto
+        stock:
+          type: Number
+          description: stock del producto
+        category:
+          type: String
+          description: categoria del producto
+        status:
+          type: Boolean
+          description: estado del producto
+      example:
+        _id: ObjectId("644081a93f0625dc193bc594")
+        title: Camiseta de Barcelona
+        description: Camiseta oficial de Barcelona Temporada 2021/2022
+        price: 45
+        thumbnail: barcelona.jpg
+        code: BAR21
+        stock: 10
+        category: Camiseta nacional
+        status: true
+  requestBodies:
+    updateProduct:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: ID auto generado by mongo
+        title:
+          type: String
+          description: Titulo del producto
+        description:
+          type: String
+          description: Descripción del producto
+        price:
+          type: Number
+          description: Precio del producto
+        thumbnail:
+          type: String
+          description: url de la imágen
+        code:
+          type: String
+          description: codigo único del producto
+        stock:
+          type: Number
+          description: stock del producto
+        category:
+          type: String
+          description: categoria del producto
+        status:
+          type: Boolean
+          description: estado del producto
+      example:
+        _id: ObjectId("644081a93f0625dc193bc594")
+        title: Camiseta de Barcelona
+        description: Camiseta oficial de Barcelona Temporada 2021/2022
+        price: 45
+        thumbnail: barcelona.jpg
+        code: BAR21
+        stock: 10
+        category: Camiseta nacional
+        status: true

@@ -1,0 +1,17 @@
+<div class='resetPassword'>
+  <p>Restablecer contraseña</p>
+  <form class='form' action='/auth/recover-pass' method='POST'>
+    <label>
+      <input type='hidden' name='email' placeholder='Correo electronico' value='{{email}}' />
+    </label>
+    <label>
+      <i class='bx bx-lock-alt'></i>
+      <input type='password' name='pass' placeholder='Contraseña' />
+    </label>
+    <label>
+      <input type='hidden' name='code' placeholder='Code' value='{{code}}' />
+    </label>
+    <input type='submit' value='Enviar código' />
+  </form>
+  <a href='/auth/login' class='buttonResetPass'>Cancelar</a>
+</div>

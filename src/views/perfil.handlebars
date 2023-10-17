@@ -1,0 +1,43 @@
+<div class='container-perfil'>
+  {{! <!--  BANNER   --> }}
+  <section class='bannerPerfil'>
+    <div class='banner-content-perfil'></div>
+  </section>
+
+  <div class='container-titulo-botones'>
+    <h1 class='titulo-perfil'>Perfil</h1>
+    email:
+    {{user.email}}
+    <br />
+    isAdmin:
+    {{user.isAdmin}}
+    <br />
+    Premium:
+    {{user.premium}}
+    <br />
+    Cart:
+    {{user.cart}}
+    <br />
+
+    {{#if user.isAdmin}}
+      <div class='info-childsbutton'>
+        <a href='/auth/admin'><button>Menu Administrador</button></a>
+      </div>
+      <div class='info-childsbutton'>
+        <a href='/realtimeproducts'><button>Cargar Productos</button></a>
+      </div>
+    {{/if}}
+
+    {{#if user.premium}}
+      <div class='info-childsbutton'>
+        <a href='/realtimeproducts'><button>Cargar Productos</button></a>
+      </div>
+    {{/if}}
+    <div class='info-childsbutton'>
+      <a href='/products'><button>ir a Productos</button></a>
+    </div>
+    <div class='info-childsbutton'>
+      <a href='/auth/logout'><button>Salir</button></a>
+    </div>
+  </div>
+</div>

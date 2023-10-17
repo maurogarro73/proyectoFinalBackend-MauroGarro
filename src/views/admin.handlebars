@@ -1,0 +1,50 @@
+<h1>Menu administrador</h1>
+<a href='/auth/perfil'><button>ir a Perfil</button></a>
+<a href='/products'><button>ir a Productos</button></a>
+<br />
+<a href='/auth/logout'><button>Salir</button></a>
+<br />
+
+<h2>Listado de usuarios</h2>
+<table id='tablePremium' class='display'>
+  <thead>
+    <tr>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>Email</th>
+      <th>Is Admin</th>
+      <th>Age</th>
+      <th>Premium</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each users}}
+      <tr>
+        <td>{{firstName}}</td>
+        <td>{{lastName}}</td>
+        <td>{{email}}</td>
+        <td>{{isAdmin}}</td>
+        <td>{{age}}</td>
+        <td>
+          <select name='' id='' data-user-id={{id}}>
+            {{#if premium}}
+              <option value='true' selected>Premium</option>
+              <option value='false'>User</option>
+            {{else}}
+              <option value='false' selected>User</option>
+              <option value='true'>Premium</option>
+            {{/if}}
+          </select>
+        </td>
+        <td>
+          {{#unless isAdmin}}
+            <button id='deleteButton' data-userid='{{id}}'>Eliminar Usuario</button>
+          {{/unless}}
+        </td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<script src='/js/adminDatatable.js'></script>

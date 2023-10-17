@@ -1,0 +1,273 @@
+paths:
+  /api/carts:
+    get:
+      summary: Obtiene todos Carritos
+      tags:
+        - Carts
+      responses:
+        200:
+          description: Los carritos fueron devueltos satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/schemas/Carts'
+        500:
+          description: Error del servidor. Usualmente generando la query o falla la conexion a la DB
+
+    post:
+      summary: Crea un carrito
+      tags:
+        - Carts
+      description: Crea un nuevo carrito.
+      responses:
+        200:
+          description: El carrito fue creado satisfactoriamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#components/requestBodies/createCart'
+        400:
+          description: Se produjo un error en la solicitud.
+
+  /api/carts/{uid}/products:
+    get:
+      summary: Obtiene un carrito por ID
+      tags:
+        - Carts
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID del carrito que se busca
+          schema:
+            $type: String
+      responses:
+        200:
+          description: Carrito encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Carts'
+
+  /api/carts/{uid}:
+    put:
+      summary: Reemplaza los productos que están por los nuevos
+      tags:
+        - Carts
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID del carrito que se busca
+          schema:
+            $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#components/requestBodies/updateProduct'
+      responses:
+        200:
+          description: Producto modificado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Success'
+
+    delete:
+      summary: Elimina todos los productos del carrito
+      tags:
+        - Carts
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: ID del carrito que desea vaciar
+          schema:
+            $type: String
+      responses:
+        200:
+          description: El carrito se limpio correctamente.
+        400:
+          description: Se produjo un error en la solicitud.
+        500:
+          description: No se encontró el carrito.
+
+  /api/carts/{cid}/products/{pid}:
+    put:
+      summary: Reemplaza los productos que están por los nuevos
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito que se busca
+          schema:
+            $type: String
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto que se busca
+          schema:
+            $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+      responses:
+        200:
+          description: Producto modificado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Success'
+
+    delete:
+      summary: Elimina el producto por id
+      tags:
+        - Carts
+      parameters:
+        - name: cid
+          in: path
+          required: true
+          description: ID del carrito que se busca
+          schema:
+            $type: String
+        - name: pid
+          in: path
+          required: true
+          description: ID del producto que se busca
+          schema:
+            $type: String
+      requestBody:
+        required: true
+        content:
+          application/json:
+      responses:
+        200:
+          description: Producto modificado exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Success'
+
+components:
+  schemas:
+    Success:
+      type: object
+      properties:
+        status:
+          type: String
+          description: success or error
+        message:
+          type: String
+          description: aclarando que ocurrio
+      example:
+        status: success
+        message: Product updated
+    Carts:
+      type: object
+      properties:
+        _id:
+          type: ObjectId
+          description: ID auto generado by mongo
+          required: true
+        products:
+          type: array
+          items:
+            type: object
+            properties:
+              _id:
+                type: ObjectId
+                description: ID auto generado by mongo del producto
+                required: true
+              quantity:
+                type: Number
+                description: Cantidad agregadas del producto
+                required: true
+      example:
+        _id: ObjectId(64ab484ce2b7d1a4ae6c2006)
+        products:
+          - quantity: 1
+            _id: ObjectId(647e6c999ff867d416d64cda)
+            __v: 9
+          - quantity: 1
+            _id: ObjectId(647e76e3f2fe3f6509a309c3)
+            __v: 2
+
+  requestBodies:
+    updateProduct:
+      type: object
+      properties:
+        products:
+          quantity:
+            type: Number
+          _id:
+            type: object
+            items:
+              _id:
+                type: ObjectId
+                description: ID auto generado by mongo
+              title:
+                type: String
+                description: Titulo del producto
+              description:
+                type: String
+                description: Descripción del producto
+              price:
+                type: Number
+                description: Precio del producto
+              thumbnail:
+                type: String
+                description: url de la imágen
+              code:
+                type: String
+                description: codigo único del producto
+              stock:
+                type: Number
+                description: stock del producto
+              category:
+                type: String
+                description: categoria del producto
+              status:
+                type: Boolean
+                description: estado del producto
+      example:
+        products:
+          - quantity: 1
+          - _id:
+              _id: ObjectId("644081a93f0625dc193bc594")
+              title: Camiseta de Barcelona
+              description: Camiseta oficial de Barcelona Temporada 2021/2022
+              price: 45
+              thumbnail: barcelona.jpg
+              code: BAR21
+              stock: 10
+              category: Camiseta nacional
+              status: true
+
+    createCart:
+      Cart:
+        type: object
+        properties:
+          _id:
+            type: ObjectId
+            description: ID auto generado by mongo
+          products:
+            type: array
+            items:
+              _id:
+                type: ObjectId
+                description: ID auto generado by mongo del producto
+              quantity:
+                type: Number
+                description: Cantidad agregadas del producto
+      example:
+        _id: ObjectId("644081a93f0625dc193by879")
+        products: array
