@@ -5,7 +5,7 @@ function putIntoCart(_id) {
     window.location.href = 'https://proyectofinalbackend-maurogarro.onrender.com/auth/login';
   }
 
-  fetch(`https://proyectofinalbackend-maurogarro.onrender.com/api/carts/${cartId}/products/${_id}`, {
+  fetch(`/api/carts/${cartId}/products/${_id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
