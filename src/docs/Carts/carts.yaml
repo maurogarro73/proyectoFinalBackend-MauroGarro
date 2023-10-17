@@ -10,9 +10,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#components/schemas/Carts'
+                $ref: '#components/schemas/ResAllCarts'
         500:
           description: Error del servidor. Usualmente generando la query o falla la conexion a la DB
 
@@ -51,7 +49,13 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#components/schemas/Carts'
+                $ref: '#components/schemas/CartsById'
+        404:
+          description: Error al buscar el carrito
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorCarritoNoEncontrado'
 
   /api/carts/{uid}:
     put:
@@ -200,6 +204,66 @@ components:
           - quantity: 1
             _id: ObjectId(647e76e3f2fe3f6509a309c3)
             __v: 2
+    ResAllCarts:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la respuesta
+        msg:
+          type: string
+          description: Mensaje asociado a la respuesta
+        payload:
+          type: array
+          items:
+            $ref: '#/components/schemas/ElementoCarrito'
+      example:
+        status: success
+        msg: Lista de carritos
+        payload:
+          - _id: '64ab4231fad1a441f3a16e1a'
+            products: []
+            __v: 11
+          - _id: '64ab484ce2b7d1a4ae6c2006'
+            products:
+              - quantity: 1
+                _id: null
+              - quantity: 1
+                _id: null
+            __v: 15
+    CartsById:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la respuesta
+        msg:
+          type: string
+          description: Mensaje asociado a la respuesta
+        payload:
+          $ref: '#/components/schemas/ElementoCarrito'
+      example:
+        status: success
+        msg: Carrito encontrado
+        payload:
+          _id: '64be9de52f039236ff9a4c80'
+          products: []
+          __v: 2
+    ErrorCarritoNoEncontrado:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Estado de la respuesta
+        message:
+          type: string
+          description: Mensaje de error
+      required:
+        - status
+        - message
+      example:
+        status: error
+        message: Error al obtener el carrito
 
   requestBodies:
     updateProduct:
