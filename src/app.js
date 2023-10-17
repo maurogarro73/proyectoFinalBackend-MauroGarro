@@ -86,8 +86,9 @@ app.use('/api/carts', cartsRouter);
 app.use('/api/users', usersRouter);
 
 /* HTML Render */
+const API_URL = process.env.API_URL;
 app.get('/', (req, res) => {
-  return res.redirect('http://localhost:8080/auth/login');
+  return res.redirect(`${API_URL}auth/login`);
 });
 app.use('/products', productsHtml);
 app.use('/carts', cartsHtml);

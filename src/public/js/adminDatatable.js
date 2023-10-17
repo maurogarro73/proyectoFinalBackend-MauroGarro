@@ -1,5 +1,5 @@
 function updatePremium(userId, premium) {
-  fetch(`http://localhost:8080/api/users/premium/${userId}`, {
+  fetch(`https://proyectofinalbackend-maurogarro.onrender.com/api/users/premium/${userId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ document.getElementById('tablePremium').addEventListener('change', function (eve
 });
 
 function delteUserById(userId) {
-  fetch(`http://localhost:8080/api/users/${userId}`, {
+  fetch(`https://proyectofinalbackend-maurogarro.onrender.com/api/users/${userId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',

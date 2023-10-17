@@ -1,12 +1,11 @@
-const API_URL = 'http://localhost:8080/api';
 function putIntoCart(_id) {
   const cartInfoElement = document.querySelector('.cartId');
   const cartId = cartInfoElement?.id;
   if (cartId === undefined) {
-    window.location.href = 'http://localhost:8080/auth/login';
+    window.location.href = 'https://proyectofinalbackend-maurogarro.onrender.com/auth/login';
   }
 
-  fetch(`http://localhost:8080/api/carts/${cartId}/products/${_id}`, {
+  fetch(`https://proyectofinalbackend-maurogarro.onrender.com/api/carts/${cartId}/products/${_id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

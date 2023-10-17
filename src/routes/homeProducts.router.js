@@ -40,7 +40,7 @@ productsHtml.get('/', async (req, res) => {
 
     let links = [];
     for (let i = 1; i < rest.totalPages + 1; i++) {
-      links.push({ label: i, href: 'http://localhost:8080/products?page=' + i });
+      links.push({ label: i, href: 'https://proyectofinalbackend-maurogarro.onrender.com/products?page=' + i });
     }
 
     return res.status(200).render('home', { products, pagination: rest, links, userSession, userSessionisAdmin, userSessionisPremium, cart });
